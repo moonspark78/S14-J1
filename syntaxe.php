@@ -38,22 +38,11 @@ echo applique_tva(100, 10);
 
 <?php
 function meteo($saison, $temperature) {
-
-    
-    if ($saison == "printemps") {
-        $debut = "Nous sommes au " . $saison;
-    } else {
-        $debut = "Nous sommes en " . $saison;
-    }
-
-   
-    if ($temperature > 1 || $temperature < -1) {
-        $deg = "degrés";
-    } else {
-        $deg = "degré";
-    }
-
-    return $debut . " et il fait " . $temperature . " " . $deg . "<hr>";
+    return "Nous sommes " 
+        . ($saison == "printemps" ? "au" : "en") 
+        . " $saison et il fait $temperature " 
+        . ($temperature > 1 ? "degrés" : "degré")
+        . "<hr>";
 }
 echo meteo("printemps", 15);
 echo meteo("été", 25);
