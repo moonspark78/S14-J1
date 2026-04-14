@@ -21,7 +21,7 @@ if (isset($_GET["pays"])) {
 <head>
     <title>GET + Bootstrap</title>
 
-    <!-- Bootstrap -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -31,7 +31,7 @@ if (isset($_GET["pays"])) {
 
     <h1>Choisissez un pays 🌍</h1>
 
-    <!-- Boutons -->
+    
     <div class="mt-4">
         <a href="?pays=france" class="btn btn-primary m-2">France</a>
         <a href="?pays=espagne" class="btn btn-danger m-2">Espagne</a>
@@ -39,7 +39,7 @@ if (isset($_GET["pays"])) {
         <a href="?pays=allemagne" class="btn btn-warning m-2">Allemagne</a>
     </div>
 
-    <!-- Message -->
+    
     <?php if ($message != ""): ?>
         <div class="alert alert-info mt-4">
             <?php echo $message; ?>
