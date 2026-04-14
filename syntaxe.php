@@ -91,11 +91,7 @@ for ($i = 2000; $i >= 1930; $i--) {
 <?php
 for ($i = 1; $i <= 10; $i++) {
 
-    if ($i == 1) {
-        $suffixe = "ère";
-    } else {
-        $suffixe = "ème";
-    }
+    $suffixe = ($i == 1) ? "ère" : "ème";
 
     echo "<h2>Je m'affiche pour la " . $i . $suffixe . " fois</h2>";
 }
