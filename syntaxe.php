@@ -66,13 +66,37 @@ for ($i = 0; $i < 10; $i++) {
 
 <h4>Petit 2-</h4>
 <?php
+for ($i = 0; $i < 10; $i++)
+    for ($i = 1; $i <= 100; $i++) {
+        echo $i . " ";
+    }
 ?>
 <h4>Petit 3-</h4>
 <?php
+for ($i = 1; $i <= 100; $i++) {
+    if ($i == 50) {
+        echo "<span style='color:red;'>$i</span> ";
+    } else {
+        echo $i . " ";
+    }
+}
 ?>
 <h4>Petit 4-</h4>
 <?php
+for ($i = 2000; $i >= 1930; $i--) {
+    echo $i . " ";
+}
 ?>
 <h4>Petit 5-</h4>
 <?php
+for ($i = 1; $i <= 10; $i++) {
+
+    if ($i == 1) {
+        $suffixe = "ère";
+    } else {
+        $suffixe = "ème";
+    }
+
+    echo "<h2>Je m'affiche pour la " . $i . $suffixe . " fois</h2>";
+}
 ?>
