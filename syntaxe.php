@@ -33,3 +33,30 @@ echo applique_tva(500);
 echo applique_tva(100, 10);
 ?>
 </h4>
+
+<h3>Exercice 3</h3>
+
+<?php
+function meteo($saison, $temperature) {
+
+    
+    if ($saison == "printemps") {
+        $debut = "Nous sommes au " . $saison;
+    } else {
+        $debut = "Nous sommes en " . $saison;
+    }
+
+   
+    if ($temperature > 1 || $temperature < -1) {
+        $deg = "degrés";
+    } else {
+        $deg = "degré";
+    }
+
+    return $debut . " et il fait " . $temperature . " " . $deg . "<hr>";
+}
+echo meteo("printemps", 15);
+echo meteo("été", 25);
+echo meteo("hiver", -1);
+
+?>
