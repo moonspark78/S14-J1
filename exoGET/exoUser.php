@@ -99,7 +99,7 @@ $action = $_GET['action'] ?? 'voir';
             Confirmer la suppression
         </a>
 
-        <a href="exoGestionUsers.php" class="btn btn-secondary">Annuler</a>
+        <a href="gestionUsers.php" class="btn btn-secondary">Annuler</a>
 
     <?php endif; ?>
 
