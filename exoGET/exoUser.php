@@ -1,102 +1,91 @@
 <?php
 session_start();
 
-// Si pas de session → retour liste
-if (empty($_SESSION['users'])) {
-    header("Location: gestionUsers.php");
-    exit;
-}
-
-// 🔥 SUPPRESSION
-if (isset($_GET['action']) && $_GET['action'] === 'confirm_suppression' && isset($_GET['id'])) {
-
-    foreach ($_SESSION['users'] as $key => $user) {
-        if ($user['id'] == $_GET['id']) {
-            unset($_SESSION['users'][$key]);
-        }
-    }
-
-    $_SESSION['users'] = array_values($_SESSION['users']);
-
-    header("Location: exoGestionUsers.php");
-    exit;
-}
-
-// 🔥 MODIFICATION
-if ($_SERVER["REQUEST_METHOD"] === "POST" && $_GET['action'] === "modifier") {
-
-    foreach ($_SESSION['users'] as &$user) {
-        if ($user['id'] == $_GET['id']) {
-            $user['nom'] = $_POST['nom'];
-            $user['email'] = $_POST['email'];
-        }
-    }
-
-    header("Location: gestionUsers.php");
-    exit;
-}
-
-// Récup user
 $user = null;
+$action = $_GET['action'] ?? 'voir';
+$id = $_GET['id'] ?? null;
 
-if (isset($_GET['id'])) {
+if (!isset($_SESSION['users'])) {
+    header("Location: gestionUsers.php");
+    exit;
+}
+
+
+if ($id) {
     foreach ($_SESSION['users'] as $u) {
-        if ($u['id'] == $_GET['id']) {
+        if ($u['id'] == $id) {
             $user = $u;
+            break;
         }
     }
 }
 
-$action = $_GET['action'] ?? 'voir';
+
+if ($action === 'confirm_suppression' && $id) {
+    foreach ($_SESSION['users'] as $key => $u) {
+        if ($u['id'] == $id) {
+            unset($_SESSION['users'][$key]);
+            break;
+        }
+    }
+    $_SESSION['users'] = array_values($_SESSION['users']);
+    header("Location: gestionUsers.php");
+    exit;
+}
+
+
+if ($action === 'modifier' && $_SERVER["REQUEST_METHOD"] === "POST" && $id) {
+    foreach ($_SESSION['users'] as &$u) {
+        if ($u['id'] == $id) {
+            $u['nom'] = $_POST['nom'];
+            $u['email'] = $_POST['email'];
+            break;
+        }
+    }
+    header("Location: gestionUsers.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Action utilisateur</title>
+    <title>User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body class="bg-light">
 
-<div class="container my-5">
+<div class="container mt-5">
 
 <?php if ($user): ?>
 
     <?php if ($action === 'voir'): ?>
 
-        <h2>Informations utilisateur</h2>
-        <ul class="list-group mb-3">
-            <li class="list-group-item">ID : <?= $user['id']; ?></li>
-            <li class="list-group-item">Nom : <?= $user['nom']; ?></li>
-            <li class="list-group-item">Email : <?= $user['email']; ?></li>
-        </ul>
+        <h3>Utilisateur</h3>
+        <p>ID: <?= $user['id'] ?></p>
+        <p>Nom: <?= $user['nom'] ?></p>
+        <p>Email: <?= $user['email'] ?></p>
 
         <a href="gestionUsers.php" class="btn btn-secondary">Retour</a>
 
     <?php elseif ($action === 'modifier'): ?>
 
-        <h2>Modifier utilisateur</h2>
+        <h3>Modifier</h3>
 
         <form method="POST">
-            <input type="text" name="nom" class="form-control mb-2" value="<?= $user['nom']; ?>">
-            <input type="email" name="email" class="form-control mb-2" value="<?= $user['email']; ?>">
-            <button class="btn btn-primary">Enregistrer</button>
-            <a href="exoGestionUsers.php" class="btn btn-secondary">Annuler</a>
+            <input class="form-control mb-2" name="nom" value="<?= $user['nom'] ?>">
+            <input class="form-control mb-2" name="email" value="<?= $user['email'] ?>">
+            <button class="btn btn-primary">OK</button>
         </form>
 
     <?php elseif ($action === 'supprimer'): ?>
 
-        <h2>Supprimer l'utilisateur</h2>
+        <h3>Supprimer ?</h3>
+        <p><?= $user['nom'] ?></p>
 
-        <p>
-            Êtes-vous sûr de vouloir supprimer 
-            <strong><?= $user['nom']; ?></strong> (ID : <?= $user['id']; ?>) ?
-        </p>
-
-        <a href="exoUser.php?action=confirm_suppression&id=<?= $user['id']; ?>" class="btn btn-danger">
-            Confirmer la suppression
+        <a href="?action=confirm_suppression&id=<?= $user['id'] ?>" class="btn btn-danger">
+            Confirmer
         </a>
 
         <a href="gestionUsers.php" class="btn btn-secondary">Annuler</a>

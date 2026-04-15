@@ -1,13 +1,16 @@
 <?php
 session_start();
 
-$id = $_GET['id'] ?? null;
+$id = "";
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+}
+
 $produitTrouve = null;
 
-foreach ($_SESSION['produits'] as $produit) {
-    if ($produit['id'] == $id) {
-        $produitTrouve = $produit;
-        break;
+foreach ($_SESSION['produits'] as $p) {
+    if ($p['id'] == $id) {
+        $produitTrouve = $p;
     }
 }
 ?>
@@ -23,27 +26,26 @@ foreach ($_SESSION['produits'] as $produit) {
 
 <div class="container mt-5">
 
-<?php if ($produitTrouve): ?>
-    
+<?php if ($produitTrouve != null) { ?>
+
     <div class="card">
-        <img src="<?= $produitTrouve['image'] ?>" class="card-img-top">
+        <img src="<?php echo $produitTrouve['image']; ?>" class="card-img-top">
 
         <div class="card-body">
-            <h2><?= $produitTrouve['nom'] ?></h2>
-            <p><?= $produitTrouve['description'] ?></p>
-            <p><strong>Catégorie :</strong> <?= $produitTrouve['categorie'] ?></p>
+            <h3><?php echo $produitTrouve['nom']; ?></h3>
+            <p><?php echo $produitTrouve['description']; ?></p>
 
             <a href="boutique.php" class="btn btn-secondary">Retour</a>
         </div>
     </div>
 
-<?php else: ?>
+<?php } else { ?>
 
-    <div class="alert alert-danger">
+    <div>
         Produit introuvable
     </div>
 
-<?php endif; ?>
+<?php } ?>
 
 </div>
 
