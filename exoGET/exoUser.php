@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_GET['action'] === "modifier") {
         }
     }
 
-    header("Location: exoGestionUsers.php");
+    header("Location: gestionUsers.php");
     exit;
 }
 
@@ -73,7 +73,7 @@ $action = $_GET['action'] ?? 'voir';
             <li class="list-group-item">Email : <?= $user['email']; ?></li>
         </ul>
 
-        <a href="exoGestionUsers.php" class="btn btn-secondary">Retour</a>
+        <a href="gestionUsers.php" class="btn btn-secondary">Retour</a>
 
     <?php elseif ($action === 'modifier'): ?>
 

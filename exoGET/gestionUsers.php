@@ -59,7 +59,7 @@ if (!isset($_SESSION['users'])) {
 // reset session
 if (isset($_GET['reset'])) {
     session_destroy();
-    header("Location: exoGestionUsers.php");
+    header("Location: gestionUsers.php");
 }
 ?>
 
