@@ -1,5 +1,9 @@
 <?php
-$plat = $_POST["plat"] ?? "";
+if (isset($_POST["plat"])) {
+    $plat = $_POST["plat"];
+} else {
+    $plat = "";
+}
 ?>
 
 <form method="POST">
