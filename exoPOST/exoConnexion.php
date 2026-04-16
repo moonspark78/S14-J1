@@ -5,35 +5,37 @@ session_start();
 $loginError = ""; 
 $loginSuccess = "";
 
-// éviter erreur si aucun user
+
 if (!isset($_SESSION['users'])) {
     $_SESSION['users'] = [];
 }
 
-// Vérifier si le formulaire est envoyé
+// Verif du post, donc le if global request method etc 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // récupérer les données
+    
+// Ensuite récupération pseudo et password du post 
     $pseudo = $_POST["pseudo"] ?? "";
     $password = $_POST["password"] ?? "";
 
     $userFound = null;
 
-    // chercher utilisateur
+    // Trouver si le user existe avec une boucle sur les users (dans la session)
     foreach ($_SESSION['users'] as $user) {
         if ($user["pseudo"] == $pseudo) {
             $userFound = $user;
         }
     }
 
-    // vérifier mot de passe
+    // Une fois le users trouvé, on compare le mot de passe avec password_verify
     if ($userFound && password_verify($password, $userFound["password"])) {
 
+// Si password_verify me donne true alors le password est bon !
         $_SESSION["connected_user"] = $userFound;
         $loginSuccess = "Connexion réussie";
 
     } else {
-        $loginError = "Pseudo ou mot de passe incorrect";
+        $loginError = "Pseudo ou mot de passe incorrect"; 
     }
 }
 
