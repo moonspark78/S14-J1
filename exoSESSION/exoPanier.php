@@ -18,3 +18,65 @@
                     - 10 Permettre de vider le panier entier 
 
 */ 
+?>
+
+<?php
+session_start();
+
+
+$products = [
+    ["id" => 1, "name" => "T-shirt", "price" => 20],
+    ["id" => 2, "name" => "Pantalon", "price" => 40],
+    ["id" => 3, "name" => "Chaussures", "price" => 60],
+];
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+if (isset($_GET['add'])) {
+    $id = $_GET['add'];
+    foreach ($products as $product) {
+        if ($product['id'] == $id) {
+
+            
+    if (isset($_SESSION['cart'][$id])) {
+                $_SESSION['cart'][$id]['quantity']++;
+    } else {
+                
+    $_SESSION['cart'][$id] = [
+                    "name" => $product['name'],
+                    "price" => $product['price'],
+                    "quantity" => 1
+                ];
+            }
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produits</title>
+</head>
+<body>
+
+<h1>Liste des produits</h1>
+
+<?php foreach ($products as $product) { ?>
+    
+    <div style="margin-bottom:20px;">
+        <h3><?php echo $product['name']; ?></h3>
+        <p>Prix : <?php echo $product['price']; ?> €</p>
+        
+        <a href="?add=<?php echo $product['id']; ?>">
+            Ajouter au panier
+        </a>
+    </div>
+
+<?php } ?>
+
+<br>
+<a href="panier.php">Voir le panier</a>
+
+</body>
+</html>
